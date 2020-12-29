@@ -1,0 +1,15 @@
+$home-bg: rgb(201, 241, 20);
+
+.home {
+  &__body {
+    width: 400px;
+    height: 300px;
+    background-color: $home-bg;
+    &--title {
+      font-weight: 400;
+      font-size: 38px;
+      text-align: center;
+      margin: 50px 0px 0px 0px;
+        }
+  }
+}
