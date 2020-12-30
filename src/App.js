@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "./App.scss";
 import Registration from "./components/regisration/registration";
 import Home from "./components/home/home";
 import Account from "./components/account/account";
@@ -7,10 +7,8 @@ import Account from "./components/account/account";
 class App extends React.Component {
   render() {
     return (
-      <div className="app">
-        <Account />
+      <div className="app__container">
         <Registration />
-        <Home />
       </div>
     );
   }
