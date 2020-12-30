@@ -17,10 +17,22 @@ class Registration extends Component {
         </div>
         <div className="block__form">
           <form className="form">
-            <input type="text" name="login" value="" placeholder="Логин" />
-            <input type="text" name="password" value="" placeholder="Пароль" />
+            <input
+              className="form__input"
+              type="text"
+              name="login"
+              value=""
+              placeholder="Логин"
+            />
+            <input
+              className="form__input form__input--last"
+              type="text"
+              name="password"
+              value=""
+              placeholder="Пароль"
+            />
             <button className="form__btn" type="submit">
-              ЗАРЕГИСТРИРОВАТЬСЯ
+              Регистрация
             </button>
           </form>
         </div>
