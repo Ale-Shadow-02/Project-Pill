@@ -9,12 +9,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="app__container">
-        {/* <Route path="/registration" exact component={Registration} />
-        <Route path="/account-list/:id" exact component={Account} />
-        <Route path="/" exact component={Home} /> */}
-        {/* <Registration /> */}
-        <Home />
-        {/* <Account /> */}
+        <Route path="/registration" exact component={Registration} />
+        {/* <Route paht="/" exact component={Home} /> */}
+        <Route paht="/account" exact component={Account} />
       </div>
     );
   }
