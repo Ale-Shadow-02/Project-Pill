@@ -10,8 +10,8 @@ class App extends React.Component {
     return (
       <div className="app__container">
         <Route path="/registration" exact component={Registration} />
-        {/* <Route paht="/" exact component={Home} /> */}
-        <Route paht="/account" exact component={Account} />
+        <Route path="/" exact component={Home} />
+        <Route path="/account" exact component={Account} />
       </div>
     );
   }
