@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Slogan from "../blockTextTitle/blockTextTitle";
 import "./registration.scss";
 import reg_logo from "../../images/registration/registration_logo.svg";
 
@@ -8,9 +9,7 @@ class Registration extends Component {
       <div className="reg__body">
         <div className="block__text">
           <h1 className="block__text--title">Пилюля</h1>
-          <p className="block__text--slogan">БЫТЬ</p>
-          <p className="block__text--slogan">ЗДОРОВЕНЬКИМ</p>
-          <p className="block__text--slogan block__text--slogan-last">ХОЧУ</p>
+          <Slogan />
           <div className="block__text--logo">
             <img src={reg_logo} alt={reg_logo} className="block__text--img" />
           </div>
@@ -26,7 +25,7 @@ class Registration extends Component {
             />
             <input
               className="form__input form__input--last"
-              type="text"
+              type="password"
               name="password"
               value=""
               placeholder="Пароль"

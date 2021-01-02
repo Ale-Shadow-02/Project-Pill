@@ -5,50 +5,35 @@ $btn-bg-hover: darken($btn-bg, 30%);
   &__body {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 80px 0;
   }
 }
 .block {
   &__text {
-    flex: 0 1 37%;
-    &--title {
-      font-weight: bold;
-      font-size: 75px;
-      line-height: 84px;
-      letter-spacing: 0.1em;
-      color: #FBFF4A;
-      margin: 0px 0px 80px 0px;
-    }
-    &--slogan {
-      max-width: 410px;
-      font-weight: bold;
-      font-size: 41px;
-      line-height: 46px;
-      letter-spacing: 0.045em;
-      text-transform: uppercase;
-      color: #1A86C2;
-      text-shadow: 0px 4px 10px #709CB4;
-      margin: 0px 0px 24px 0px;
-      &-last {
-        margin: 0px 0px 80px 0px;
-        text-align: right;
-      }
-    }
+    flex: 0 1 40%;
     &--img {
       width: 419px;
     }
   }
   &__form {
-    flex: 0 1 1257px;
+    flex: 0 1 60%;
     margin: 0px 0px 0px 70px;
-    background: url(../../images/registration/registration_bg.svg) 0 0/contain no-repeat;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* background: url(../../images/registration/registration_bg.svg) 0 0/contain no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center; */
   }
 }
 .form {
   width: 700px;
   text-align: center;
+  background: url(../../images/registration/registration_bg.jpg) 0 0/cover no-repeat; 
+  box-shadow: 0px 10px 40px rgba(9, 27, 37, 0.7);
+  border-radius: 50px;
+  padding: 70px 50px;
   &__input {
     width: 80%;
     padding: 21px 10px 17px 40px;
@@ -71,14 +56,14 @@ $btn-bg-hover: darken($btn-bg, 30%);
   &__btn {
     display: inline-block;
     background: $btn-bg;
-    box-shadow: 0px 10px 40px #709CB4;
+    box-shadow: 0px 10px 40px #1d3340;
     border-radius: 50px;
     padding: 20px 49px;
     border: none;
     font-weight: bold;
     font-size: 20px;
     line-height: 22px;
-    color: #1a86c2;
+    color: #165477;
     text-transform: uppercase;
     letter-spacing: 3px;
     cursor: pointer;
