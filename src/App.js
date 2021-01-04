@@ -2,8 +2,9 @@ import React from "react";
 import { Route } from "react-router-dom";
 import "./App.scss";
 import Registration from "./components/regisration/registration";
-import Home from "./components/home/home";
+import HomeTest from "./components/home_test/home_test";
 import Account from "./components/account/account";
+import Home from "./components/home/home";
 
 class App extends React.Component {
   render() {
@@ -12,6 +13,7 @@ class App extends React.Component {
         <Route path="/registration" exact component={Registration} />
         <Route path="/" exact component={Home} />
         <Route path="/account" exact component={Account} />
+        <Route path="/test" exact component={HomeTest} />
       </div>
     );
   }
