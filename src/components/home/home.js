@@ -55,8 +55,29 @@ class Home extends React.Component {
     this.setState({ [inputName]: isActive });
   };
 
+  /*  componentDidMount() {
+    fetch("http://localhost:5000/card/")
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({ test: [...this.state.test, ...data] });
+        console.log(this.state.test);
+      });
+  } */
+
+  saveList = () => {
+    fetch("http://localhost:5000/list", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        id: 3,
+        title: "TestLists",
+      }),
+    });
+  };
+
   render() {
-    console.log(this.state.list);
     return (
       <div className="home__body">
         <div className="block__text">
@@ -221,7 +242,12 @@ class Home extends React.Component {
               >
                 Добавить лекарство
               </button>
-              <button className="input__list--button">Сохранить список</button>
+              <button
+                className="input__list--button"
+                onClick={() => this.saveList()}
+              >
+                Сохранить список
+              </button>
             </div>
           </div>
         </div>
