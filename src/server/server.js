@@ -5,32 +5,85 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
   next();
 });
 
-let lists = [
-  { id: 1, title: "Paracetomol" },
-  { id: 2, title: "Analgin" },
-];
+const mysql = require("mysql");
+const connection = mysql.createConnection({
+  host: "localhost",
+  port: 3306,
+  user: "root",
+  password: "Shadow_02",
+  database: "pill",
+});
+
+connection.connect((err) => {
+  if (!err) {
+    console.log("SUCCESS мы успешно подключились к базе");
+  } else {
+    console.log(err);
+  }
+});
+
+// connection.query("SELECT id, title FROM movies", (err, data) => {
+//   if (!err) {
+//     console.log(data);
+//   }
+// });
+
+let lists = [];
 
 app.post("/list", (req, res) => {
   lists.push(req.body);
   res.json(lists);
+  lists.forEach((elem) => {
+    connection.query(
+      `
+    INSERT INTO lists(id_pill, value_title, selected_radio, morning, daytime, evening)
+    VALUES("${elem.id}", "${elem.valueTitle}", "${elem.selectedRadio}", "${elem.morning}", "${elem.day}", "${elem.evening}")
+    `,
+      (err, data) => {
+        console.log(data);
+      }
+    );
+  });
 });
 
 app.get("/list", (req, res) => {
-  if (!lists) {
-    res.status(404).send();
-  } else {
-    res.status(200).json(lists);
-  }
+  connection.query("SELECT * FROM lists", (err, data) => {
+    if (!err) {
+      res.json(data);
+    } else {
+      res.status(500).send();
+    }
+  });
 });
 
-app.get("/list/:id", (req, res) => {
+app.delete("/list/:id", (req, res) => {
+  const listId = parseInt(req.params.id);
+  console.log(listId);
+  connection.query(`DELETE FROM lists WHERE id = ${listId}`, (err, data) => {
+    if (!err) {
+      console.log(data);
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+// app.delete("/list/:id", (req, res) => {
+//   const listId = parseInt(req.params.id);
+//   lists = lists.filter((el) => parseInt(el.id) !== listId);
+//   if (lists) {
+//     res.json(lists);
+//   } else {
+//     res.status(404).send("Нет такого");
+//   }
+// });
+
+/*app.get("/list/:id", (req, res) => {
   const finded = lists.find((el) => el.id === parseInt(req.params.id));
   if (!finded) {
     res.status(404).send("Нет такого пользователя");
@@ -49,17 +102,7 @@ app.put("/list/:id", (req, res) => {
   } else {
     res.status(404).send("Нет такого");
   }
-});
-
-app.delete("/list/:id", (req, res) => {
-  const listId = parseInt(req.params.id);
-  lists = lists.filter((el) => parseInt(el.id) !== listId);
-  if (lists) {
-    res.json(lists);
-  } else {
-    res.status(404).send("Нет такого");
-  }
-});
+});*/
 
 app.listen(5000, () => {
   console.log("Сервер запущен на 5000 порту");

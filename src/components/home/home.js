@@ -13,6 +13,7 @@ class Home extends React.Component {
     day: false,
     evening: false,
     list: [],
+    test: [],
   };
 
   updateInput(key, value) {
@@ -22,7 +23,7 @@ class Home extends React.Component {
   addItem() {
     const itemTitle = {
       id: 1 + Math.random(),
-      value: this.state.itemTitle.slice(),
+      valueTitle: this.state.itemTitle.slice(),
       selectedRadio: this.state.selectedRadio,
       morning: this.state.morning,
       day: this.state.day,
@@ -55,14 +56,14 @@ class Home extends React.Component {
     this.setState({ [inputName]: isActive });
   };
 
-  /*  componentDidMount() {
-    fetch("http://localhost:5000/card/")
+  componentDidMount() {
+    fetch("http://localhost:5000/list")
       .then((res) => res.json())
       .then((data) => {
         this.setState({ test: [...this.state.test, ...data] });
         console.log(this.state.test);
       });
-  } */
+  }
 
   saveList = () => {
     fetch("http://localhost:5000/list", {
@@ -71,13 +72,27 @@ class Home extends React.Component {
         "Content-type": "application/json",
       },
       body: JSON.stringify({
-        id: 3,
-        title: "TestLists",
+        id: 44,
+        valueTitle: "TestLists",
+        selectedRadio: "afterMeals",
+        morning: true,
+        day: true,
+        evening: true,
       }),
     });
   };
 
+  deleteList = () => {
+    fetch("http://localhost:5000/list/32", {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+  };
+
   render() {
+    console.log(this.state.list);
     return (
       <div className="home__body">
         <div className="block__text">
@@ -113,7 +128,7 @@ class Home extends React.Component {
                 return (
                   <li className="list__item" key={item.id}>
                     <div className="list__item--title">
-                      <p>{item.value}</p>
+                      <p>{item.valueTitle}</p>
                     </div>
                     <div>
                       <div className="list__item--radio-box">
@@ -247,6 +262,12 @@ class Home extends React.Component {
                 onClick={() => this.saveList()}
               >
                 Сохранить список
+              </button>
+              <button
+                className="input__list--button"
+                onClick={() => this.deleteList()}
+              >
+                DELETE LIST
               </button>
             </div>
           </div>
