@@ -5,6 +5,28 @@ import account_logo from "../../images/my_account/account_logo.svg";
 import "./account.scss";
 
 export default class Account extends Component {
+  state = {
+    sqlList: [],
+  };
+
+  componentDidMount() {
+    fetch("http://localhost:5000/list")
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({ sqlList: [...this.state.sqlList, ...data] });
+        console.log(this.state.sqlList);
+      });
+  }
+
+  deleteList = () => {
+    fetch("http://localhost:5000/list/41", {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+  };
+
   render() {
     return (
       <div className="account__body">
@@ -39,86 +61,65 @@ export default class Account extends Component {
           </div>
           <div className="input__list">
             <ul className="list">
-              <li className="list__item">
-                {/* <input
-                  className="list__item--title"
-                  type="text"
-                  name="name"
-                  value=""
-                  placeholder="Название лекарства"
-                /> */}
-                <div className="list__item--title">
-                  <p>Название Дедушка</p>
-                </div>
-                <div>
-                  <div className="list__item--radio-box">
-                    {"До еды"}
-                    {/* <input
-                      className="list__item--radio"
-                      type="radio"
-                      name="radio"
-                      value=""
-                    /> */}
-                    <p className="account__input--radio-box">V</p>
-                  </div>
-                  <div className="list__item--radio-box">
-                    {"После еды"}
-                    {/* <input
-                      className="list__item--radio"
-                      type="radio"
-                      name="radio"
-                      value=""
-                    /> */}
-                    <p className="account__input--radio-box">V</p>
-                  </div>
-                </div>
-                <div className="list__item--checkbox-box">
-                  {/* <label>
-                    <input
-                      className="list__item--checkbox"
-                      type="checkbox"
-                      name="check"
-                      value=""
-                    />
-                    {"Утро"}
-                  </label> */}
-                  <div className="list__item--checkbox">
-                    <p className="account__item--checkbox-box">V</p>
-                    {"Утро"}
-                  </div>
-                  {/* <label>
-                    <input
-                      className="list__item--checkbox"
-                      type="checkbox"
-                      name="check"
-                      value=""
-                    />
-                    {"День"}
-                  </label> */}
-                  <div className="list__item--checkbox">
-                    <p className="account__item--checkbox-box">V</p>
-                    {"День"}
-                  </div>
-                  {/* <label>
-                    <input
-                      className="list__item--checkbox"
-                      type="checkbox"
-                      name="check"
-                      value=""
-                    />
-                    {"Вечер"}
-                  </label> */}
-                  <div className="list__item--checkbox">
-                    <p className="account__item--checkbox-box">V</p>
-                    {"Вечер"}
-                  </div>
-                </div>
-                <button className="list__item--btn">X</button>
-              </li>
+              {this.state.sqlList.map((el) => {
+                return (
+                  <li className="list__item">
+                    <div className="list__item--title">
+                      <p>{el.value_title}</p>
+                    </div>
+                    <div>
+                      <div className="list__item--radio-box">
+                        {"До еды"}
+                        <p className="account__input--radio-box">
+                          {this.state.selectedRadio === "beforeMeals"
+                            ? "V"
+                            : null}
+                        </p>
+                      </div>
+                      <div className="list__item--radio-box">
+                        {"После еды"}
+                        <p className="account__input--radio-box">
+                          {this.state.selectedRadio === "afterMeals"
+                            ? "V"
+                            : null}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="list__item--checkbox-box">
+                      <div className="list__item--checkbox">
+                        <p className="account__item--checkbox-box">
+                          {this.state.morning ? "V" : null}
+                        </p>
+                        {"Утро"}
+                      </div>
+                      <div className="list__item--checkbox">
+                        <p className="account__item--checkbox-box">
+                          {this.state.day ? "V" : null}
+                        </p>
+                        {"День"}
+                      </div>
+                      <div className="list__item--checkbox">
+                        <p className="account__item--checkbox-box">
+                          {this.state.evening ? "V" : null}
+                        </p>
+                        {"Вечер"}
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
             <div className="input__list--btn">
-              <button className="input__list--button">Добавить список</button>
-              <button className="input__list--button account__list--btn">
+              <Link
+                to="/"
+                className="input__list--button account__list--button"
+              >
+                Добавить список
+              </Link>
+              <button
+                className="input__list--button account__list--btn"
+                onClick={() => this.deleteList()}
+              >
                 Удалить список
               </button>
             </div>

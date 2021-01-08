@@ -37,6 +37,7 @@ let lists = [];
 
 app.post("/list", (req, res) => {
   lists.push(req.body);
+  console.log(lists);
   res.json(lists);
   lists.forEach((elem) => {
     connection.query(
@@ -73,6 +74,14 @@ app.delete("/list/:id", (req, res) => {
   });
 });
 
+/* connection.query("DELETE FROM lists WHERE id > 1", (err, data) => {
+  if (!err) {
+    console.log(data);
+  } else {
+    console.log(err);
+  }
+});
+ */
 // app.delete("/list/:id", (req, res) => {
 //   const listId = parseInt(req.params.id);
 //   lists = lists.filter((el) => parseInt(el.id) !== listId);

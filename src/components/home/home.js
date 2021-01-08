@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import home_logo from "../../images/home/home_logo.svg";
 import "./home.scss";
 
+let count = 1;
+
 class Home extends React.Component {
   state = {
     listTitle: "Чей список?",
@@ -13,32 +15,33 @@ class Home extends React.Component {
     day: false,
     evening: false,
     list: [],
-    test: [],
+    sqlList: [],
   };
 
-  updateInput(key, value) {
+  updateInput = (key, value) => {
     this.setState({ [key]: value });
-  }
+  };
 
-  addItem() {
-    const itemTitle = {
-      id: 1 + Math.random(),
+  addItem = () => {
+    let itemTitle = {
+      id: count /* 1 + Math.random() */,
       valueTitle: this.state.itemTitle.slice(),
       selectedRadio: this.state.selectedRadio,
       morning: this.state.morning,
       day: this.state.day,
       evening: this.state.evening,
     };
+    count += 1;
     const list = [...this.state.list];
     list.push(itemTitle);
     this.setState({ list, itemTitle: "", selectedRadio: "" });
-  }
+  };
 
-  deleteItem(id) {
+  deleteItem = (id) => {
     const list = [...this.state.list];
     const updatedlist = list.filter((elem) => elem.id !== id);
     this.setState({ list: updatedlist });
-  }
+  };
 
   handleChange = (event) => {
     let inputName = event.target.name;
@@ -56,14 +59,28 @@ class Home extends React.Component {
     this.setState({ [inputName]: isActive });
   };
 
-  componentDidMount() {
-    fetch("http://localhost:5000/list")
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({ test: [...this.state.test, ...data] });
-        console.log(this.state.test);
+  saveList = () => {
+    this.state.list.map((el) => {
+      return fetch("http://localhost:5000/list", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          id: `${el.id}`,
+          valueTitle: `${el.valueTitle}`,
+          selectedRadio: `${el.selectedRadio}`,
+          morning: `${el.morning}`,
+          day: `${el.day}`,
+          evening: `${el.evening}`,
+        }),
       });
-  }
+    });
+    // .then((res) => res.json())
+    // .then((data) => {
+    //   console.log(data);
+    // });
+  };
 
   saveList = () => {
     fetch("http://localhost:5000/list", {
@@ -71,23 +88,18 @@ class Home extends React.Component {
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({
-        id: 44,
-        valueTitle: "TestLists",
-        selectedRadio: "afterMeals",
-        morning: true,
-        day: true,
-        evening: true,
-      }),
-    });
-  };
-
-  deleteList = () => {
-    fetch("http://localhost:5000/list/32", {
-      method: "DELETE",
-      headers: {
-        "Content-type": "application/json",
-      },
+      body: JSON.stringify(
+        this.state.list.map((el) => {
+          return {
+            id: el.id,
+            valueTitle: el.valueTitle,
+            selectedRadio: el.selectedRadio,
+            morning: el.morning,
+            day: el.day,
+            evening: el.evening,
+          };
+        })
+      ),
     });
   };
 
@@ -246,7 +258,6 @@ class Home extends React.Component {
                     {"Вечер"}
                   </label>
                 </div>
-                {/* <button className="list__item--btn">X</button> */}
               </div>
             </div>
             <div className="input__list--btn">
@@ -262,12 +273,6 @@ class Home extends React.Component {
                 onClick={() => this.saveList()}
               >
                 Сохранить список
-              </button>
-              <button
-                className="input__list--button"
-                onClick={() => this.deleteList()}
-              >
-                DELETE LIST
               </button>
             </div>
           </div>
