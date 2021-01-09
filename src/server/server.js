@@ -33,17 +33,31 @@ connection.connect((err) => {
 //   }
 // });
 
-let lists = [];
+//let lists = [];
 
 app.post("/list", (req, res) => {
-  lists.push(req.body);
-  console.log(lists);
-  res.json(lists);
-  lists.forEach((elem) => {
+  const title = req.body.listTitle;
+  console.log(title);
+  connection.query(
+    `
+    INSERT INTO list_title(title)
+    VALUES("${title}")
+  `,
+    (err, data) => {
+      console.log(data);
+    }
+  );
+});
+
+app.post("/list", (req, res) => {
+  // lists.push(req.body);
+  // console.log(lists);
+  // res.json(lists);
+  req.body.forEach((elem) => {
     connection.query(
       `
-    INSERT INTO lists(id_pill, value_title, selected_radio, morning, daytime, evening)
-    VALUES("${elem.id}", "${elem.valueTitle}", "${elem.selectedRadio}", "${elem.morning}", "${elem.day}", "${elem.evening}")
+    INSERT INTO lists(id_pill, value_title, selected_radio, morning, daytime, evening, list_title)
+    VALUES("${elem.id}", "${elem.valueTitle}", "${elem.selectedRadio}", "${elem.morning}", "${elem.day}", "${elem.evening}", "${elem.listTitle}")
     `,
       (err, data) => {
         console.log(data);
@@ -74,14 +88,22 @@ app.delete("/list/:id", (req, res) => {
   });
 });
 
-/* connection.query("DELETE FROM lists WHERE id > 1", (err, data) => {
-  if (!err) {
-    console.log(data);
-  } else {
-    console.log(err);
-  }
-});
- */
+// connection.query("DELETE FROM lists WHERE id > 0", (err, data) => {
+//   if (!err) {
+//     console.log(data);
+//   } else {
+//     console.log(err);
+//   }
+// });
+
+// connection.query("DELETE FROM list_title WHERE id > 0", (err, data) => {
+//   if (!err) {
+//     console.log(data);
+//   } else {
+//     console.log(err);
+//   }
+// });
+
 // app.delete("/list/:id", (req, res) => {
 //   const listId = parseInt(req.params.id);
 //   lists = lists.filter((el) => parseInt(el.id) !== listId);

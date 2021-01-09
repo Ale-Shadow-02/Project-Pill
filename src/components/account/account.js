@@ -40,7 +40,7 @@ export default class Account extends Component {
           </div>
           <Slogan />
           <div className="home__list">
-            <span className="home__list--title">Лекарства для Мамы</span>
+            <span className="home__list--title"></span>
             <Link to="/account-list" className="home__list--link">
               Перейти
             </Link>

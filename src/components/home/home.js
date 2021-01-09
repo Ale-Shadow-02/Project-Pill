@@ -15,7 +15,6 @@ class Home extends React.Component {
     day: false,
     evening: false,
     list: [],
-    sqlList: [],
   };
 
   updateInput = (key, value) => {
@@ -30,6 +29,7 @@ class Home extends React.Component {
       morning: this.state.morning,
       day: this.state.day,
       evening: this.state.evening,
+      listTitle: this.state.listTitle,
     };
     count += 1;
     const list = [...this.state.list];
@@ -60,21 +60,12 @@ class Home extends React.Component {
   };
 
   saveList = () => {
-    this.state.list.map((el) => {
-      return fetch("http://localhost:5000/list", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          id: `${el.id}`,
-          valueTitle: `${el.valueTitle}`,
-          selectedRadio: `${el.selectedRadio}`,
-          morning: `${el.morning}`,
-          day: `${el.day}`,
-          evening: `${el.evening}`,
-        }),
-      });
+    fetch("http://localhost:5000/list", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(this.state.list),
     });
     // .then((res) => res.json())
     // .then((data) => {
@@ -82,29 +73,21 @@ class Home extends React.Component {
     // });
   };
 
-  saveList = () => {
+  saveListTitle = () => {
     fetch("http://localhost:5000/list", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(
-        this.state.list.map((el) => {
-          return {
-            id: el.id,
-            valueTitle: el.valueTitle,
-            selectedRadio: el.selectedRadio,
-            morning: el.morning,
-            day: el.day,
-            evening: el.evening,
-          };
-        })
-      ),
+      body: JSON.stringify({
+        listTitle: this.state.listTitle,
+      }),
     });
   };
 
   render() {
     console.log(this.state.list);
+    console.log(this.state.listTitle);
     return (
       <div className="home__body">
         <div className="block__text">
@@ -211,7 +194,7 @@ class Home extends React.Component {
                       name="beforeMeals"
                       value="beforeMeals"
                       checked={this.state.selectedRadio === "beforeMeals"}
-                      onChange={this.hendleRadioChecked}
+                      onChange={() => this.hendleRadioChecked()}
                     />
                   </div>
                   <div className="list__item--radio-box">
@@ -222,7 +205,7 @@ class Home extends React.Component {
                       name="afterMeals"
                       value="afterMeals"
                       checked={this.state.selectedRadio === "afterMeals"}
-                      onChange={this.hendleRadioChecked}
+                      onChange={() => this.hendleRadioChecked()}
                     />
                   </div>
                 </div>
@@ -233,7 +216,7 @@ class Home extends React.Component {
                       type="checkbox"
                       name="morning"
                       checked={this.state.morning}
-                      onChange={this.hendleChecked}
+                      onChange={() => this.hendleChecked()}
                     />
                     {"Утро"}
                   </label>
@@ -243,7 +226,7 @@ class Home extends React.Component {
                       type="checkbox"
                       name="day"
                       checked={this.state.day}
-                      onChange={this.hendleChecked}
+                      onChange={() => this.hendleChecked()}
                     />
                     {"День"}
                   </label>
@@ -253,7 +236,7 @@ class Home extends React.Component {
                       type="checkbox"
                       name="evening"
                       checked={this.state.evening}
-                      onChange={this.hendleChecked}
+                      onChange={() => this.hendleChecked()}
                     />
                     {"Вечер"}
                   </label>
@@ -273,6 +256,12 @@ class Home extends React.Component {
                 onClick={() => this.saveList()}
               >
                 Сохранить список
+              </button>
+              <button
+                className="input__list--button"
+                onClick={() => this.saveListTitle()}
+              >
+                Сохранить ЗАГАЛОВОК
               </button>
             </div>
           </div>
