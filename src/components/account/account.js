@@ -7,14 +7,19 @@ import "./account.scss";
 export default class Account extends Component {
   state = {
     sqlList: [],
+    title: "",
   };
 
   componentDidMount() {
-    fetch("http://localhost:5000/list")
+    fetch("http://localhost:8000/list")
       .then((res) => res.json())
       .then((data) => {
-        this.setState({ sqlList: [...this.state.sqlList, ...data] });
-        console.log(this.state.sqlList);
+        data.map((el) => {
+          return this.setState({
+            sqlList: [...this.state.sqlList, ...el.newList],
+            title: el.title,
+          });
+        });
       });
   }
 
@@ -40,7 +45,7 @@ export default class Account extends Component {
           </div>
           <Slogan />
           <div className="home__list">
-            <span className="home__list--title"></span>
+            <span className="home__list--title">{this.state.title}</span>
             <Link to="/account-list" className="home__list--link">
               Перейти
             </Link>
@@ -49,13 +54,7 @@ export default class Account extends Component {
         <div className="block__list">
           <div className="block__list--header">
             <div className="block__list--title header">
-              <h2 className="header__title">Список лекарств</h2>
-              <input
-                type="text"
-                name="title"
-                className="header__input"
-                placeholder="название списка"
-              />
+              <h2 className="header__title">{this.state.title}</h2>
             </div>
             <div className="account__header--logo"></div>
           </div>
@@ -65,42 +64,38 @@ export default class Account extends Component {
                 return (
                   <li className="list__item">
                     <div className="list__item--title">
-                      <p>{el.value_title}</p>
+                      <p>{el.valueTitle}</p>
                     </div>
                     <div>
                       <div className="list__item--radio-box">
                         {"До еды"}
                         <p className="account__input--radio-box">
-                          {this.state.selectedRadio === "beforeMeals"
-                            ? "V"
-                            : null}
+                          {el.selectedRadio === "beforeMeals" ? "V" : null}
                         </p>
                       </div>
                       <div className="list__item--radio-box">
                         {"После еды"}
                         <p className="account__input--radio-box">
-                          {this.state.selectedRadio === "afterMeals"
-                            ? "V"
-                            : null}
+                          {el.selectedRadio === "afterMeals" ? "V" : null}
                         </p>
                       </div>
                     </div>
                     <div className="list__item--checkbox-box">
                       <div className="list__item--checkbox">
                         <p className="account__item--checkbox-box">
-                          {this.state.morning ? "V" : null}
+                          {el.morning ? "V" : null}
                         </p>
                         {"Утро"}
                       </div>
                       <div className="list__item--checkbox">
                         <p className="account__item--checkbox-box">
-                          {this.state.day ? "V" : null}
+                          {el.day ? "V" : null}
                         </p>
                         {"День"}
                       </div>
                       <div className="list__item--checkbox">
                         <p className="account__item--checkbox-box">
-                          {this.state.evening ? "V" : null}
+                          {el.evening ? "V" : null}
                         </p>
                         {"Вечер"}
                       </div>
