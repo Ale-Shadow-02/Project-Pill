@@ -4,7 +4,23 @@ import home_logo from "../../images/home/home_logo.svg";
 //import "./home.scss";
 
 export default class BlockTtext extends React.Component {
+  state = {
+    clickList: [],
+  };
+
+  // componentDidMount() {
+  //   fetch("http://localhost:8000/list/")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       this.setState({
+  //         clickList: [...this.state.clickList, ...data],
+  //       });
+  //     });
+  //   }
+
   render() {
+    //console.log(this.state.clickList);
     const { listTitle, textLink } = this.props;
     return (
       <div className="block__text">
@@ -21,6 +37,19 @@ export default class BlockTtext extends React.Component {
             Перейти
           </a>
         </div>
+        {/* {this.state.clickList.map((el) => {
+          return (
+            <div className="home__list" key={el.id}>
+              <span className="home__list--title">{el.title}</span>
+              <a
+                href={`http://localhost:3000/account/${el.id}`}
+                className="home__list--link"
+              >
+                Перейти
+              </a>
+            </div>
+          );
+        })} */}
       </div>
     );
   }

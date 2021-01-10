@@ -232,6 +232,7 @@ class Home extends React.Component {
               <button
                 className="input__list--button"
                 onClick={() => this.props.saveList()}
+                disabled={!this.props.list.length}
               >
                 Сохранить список
               </button>

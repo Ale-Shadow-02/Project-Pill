@@ -79,6 +79,8 @@ class App extends React.Component {
           return this.setState({ textLink: el.id });
         });
       });
+    const clearList = [];
+    this.setState({ list: clearList, listTitle: "" });
   };
 
   render() {
