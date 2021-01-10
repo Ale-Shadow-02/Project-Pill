@@ -16,7 +16,7 @@ export default class Account extends Component {
         console.log(data);
         data.map((el) => {
           return this.setState({
-            sqlList: [...this.state.sqlList, ...el.newList],
+            sqlList: [...el.newList],
             title: el.title,
           });
         });
@@ -45,7 +45,7 @@ export default class Account extends Component {
   };
 
   render() {
-    console.log(this.state.sqlList);
+    console.log(this.props);
     return (
       <div className="account__body">
         <BlockText />
@@ -60,7 +60,7 @@ export default class Account extends Component {
             <ul className="list">
               {this.state.sqlList.map((el) => {
                 return (
-                  <li className="list__item">
+                  <li className="list__item" key={el.id}>
                     <div className="list__item--title">
                       <p>{el.valueTitle}</p>
                     </div>

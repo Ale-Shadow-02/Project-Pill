@@ -93,7 +93,7 @@ class App extends React.Component {
           <Home2
             {...this.state}
             saveList={this.saveList}
-            textLink={this.state.textLink}
+            // textLink={this.state.textLink}
             updateInput={this.updateInput}
             addItem={this.addItem}
             deleteItem={this.deleteItem}
@@ -103,7 +103,7 @@ class App extends React.Component {
           />
         </Route>
         {/* <Route path="/account/:id" exact component={Account} /> */}
-        <Route path="/account/:id">
+        <Route path="/account/:id" exact>
           <Account listId={this.state.textLink} />
         </Route>
         {/* <Route path="/test" exact component={HomeTest} /> */}
