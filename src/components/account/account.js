@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import Slogan from "../blockTextTitle/blockTextTitle";
 import { Link } from "react-router-dom";
-import account_logo from "../../images/my_account/account_logo.svg";
+import BlockText from "../blockText/blockText";
 import "./account.scss";
 
 export default class Account extends Component {
@@ -11,9 +10,10 @@ export default class Account extends Component {
   };
 
   componentDidMount() {
-    fetch("http://localhost:8000/list")
+    fetch(`http://localhost:8000/list/${this.props.listId}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         data.map((el) => {
           return this.setState({
             sqlList: [...this.state.sqlList, ...el.newList],
@@ -22,6 +22,18 @@ export default class Account extends Component {
         });
       });
   }
+
+  // componentDidMount() {
+  //   fetch(`http://localhost:8000/list/${this.props.listId}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       this.setState({
+  //         sqlList: [...this.state.sqlList, ...data.newList],
+  //         title: data.title,
+  //       });
+  //     });
+  // }
 
   deleteList = () => {
     fetch("http://localhost:5000/list/41", {
@@ -33,24 +45,10 @@ export default class Account extends Component {
   };
 
   render() {
+    console.log(this.state.sqlList);
     return (
       <div className="account__body">
-        <div className="block__text">
-          <div className="account__logo">
-            <img
-              src={account_logo}
-              className="account__logo--img"
-              alt={account_logo}
-            />
-          </div>
-          <Slogan />
-          <div className="home__list">
-            <span className="home__list--title">{this.state.title}</span>
-            <Link to="/account-list" className="home__list--link">
-              Перейти
-            </Link>
-          </div>
-        </div>
+        <BlockText />
         <div className="block__list">
           <div className="block__list--header">
             <div className="block__list--title header">

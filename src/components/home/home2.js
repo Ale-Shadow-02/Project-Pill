@@ -1,109 +1,89 @@
 import React from "react";
-import Slogan from "../blockTextTitle/blockTextTitle";
-import home_logo from "../../images/home/home_logo.svg";
+import BlockText from "../blockText/blockText";
 import "./home.scss";
 
-let count = 1;
+// let count = 1;
 
 class Home extends React.Component {
-  state = {
-    listTitle: "",
-    itemTitle: "",
-    selectedRadio: "",
-    morning: false,
-    day: false,
-    evening: false,
-    textLink: "",
-    list: [],
-  };
+  // state = {
+  //   listTitle: "",
+  //   itemTitle: "",
+  //   selectedRadio: "",
+  //   morning: false,
+  //   day: false,
+  //   evening: false,
+  //   textLink: "",
+  //   list: [],
+  // };
 
-  updateInput = (key, value) => {
-    this.setState({ [key]: value });
-  };
+  // updateInput = (key, value) => {
+  //   this.setState({ [key]: value });
+  // };
 
-  addItem = () => {
-    let itemTitle = {
-      id: count /* 1 + Math.random() */,
-      valueTitle: this.state.itemTitle.slice(),
-      selectedRadio: this.state.selectedRadio,
-      morning: this.state.morning,
-      day: this.state.day,
-      evening: this.state.evening,
-    };
-    count += 1;
-    const list = [...this.state.list];
-    list.push(itemTitle);
-    this.setState({ list, itemTitle: "" });
-  };
+  // addItem = () => {
+  //   let itemTitle = {
+  //     id: count /* 1 + Math.random() */,
+  //     valueTitle: this.state.itemTitle.slice(),
+  //     selectedRadio: this.state.selectedRadio,
+  //     morning: this.state.morning,
+  //     day: this.state.day,
+  //     evening: this.state.evening,
+  //   };
+  //   count += 1;
+  //   const list = [...this.state.list];
+  //   list.push(itemTitle);
+  //   this.setState({ list, itemTitle: "" });
+  // };
 
-  deleteItem = (id) => {
-    const list = [...this.state.list];
-    const updatedlist = list.filter((elem) => elem.id !== id);
-    this.setState({ list: updatedlist });
-  };
+  // deleteItem = (id) => {
+  //   const list = [...this.state.list];
+  //   const updatedlist = list.filter((elem) => elem.id !== id);
+  //   this.setState({ list: updatedlist });
+  // };
 
-  handleChange = (event) => {
-    let inputName = event.target.name;
-    let inputValue = event.target.value;
-    this.setState({ [inputName]: inputValue });
-  };
+  // handleChange = (event) => {
+  //   let inputName = event.target.name;
+  //   let inputValue = event.target.value;
+  //   this.setState({ [inputName]: inputValue });
+  // };
 
-  hendleRadioChecked = (event) => {
-    this.setState({ selectedRadio: event.target.value });
-  };
+  // hendleRadioChecked = (event) => {
+  //   this.setState({ selectedRadio: event.target.value });
+  // };
 
-  hendleChecked = (event) => {
-    let inputName = event.target.name;
-    let isActive = event.target.checked;
-    this.setState({ [inputName]: isActive });
-  };
+  // hendleChecked = (event) => {
+  //   let inputName = event.target.name;
+  //   let isActive = event.target.checked;
+  //   this.setState({ [inputName]: isActive });
+  // };
 
-  saveList = () => {
-    fetch("http://localhost:8000/list", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        title: this.state.listTitle,
-        newList: this.state.list,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        data.map((el) => {
-          return this.setState({ textLink: el.id });
-        });
-      });
-  };
-
-  // linkId = () => {
-  //   fetch(`http://localhost:8000/list/${this.state.textLink}`
-  //   .then((res) => res.json())
-  //   .then((data) => {
-
+  // saveList = () => {
+  //   fetch("http://localhost:8000/list", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       title: this.state.listTitle,
+  //       newList: this.state.list,
+  //     }),
   //   })
-  //   )
-  // }
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       data.map((el) => {
+  //         return this.setState({ textLink: el.id });
+  //       });
+  //     });
+  // };
 
   render() {
+    console.log(this.props);
     return (
       <div className="home__body">
-        <div className="block__text">
-          <div className="home__logo">
-            <img src={home_logo} className="home__logo--img" alt={home_logo} />
-          </div>
-          <Slogan />
-          <div className="home__list">
-            <span className="home__list--title">{this.state.listTitle}</span>
-            <a
-              href={`http://localhost:3000/account/${this.state.textLink}`}
-              className="home__list--link"
-            >
-              Перейти
-            </a>
-          </div>
-        </div>
+        <BlockText
+          textLink={this.props.textLink}
+          listTitle={this.props.listTitle}
+        />
         <div className="block__list">
           <div className="block__list--header">
             <div className="block__list--title header">
@@ -111,8 +91,8 @@ class Home extends React.Component {
               <input
                 type="text"
                 name="listTitle"
-                value={this.state.listTitle}
-                onChange={this.handleChange}
+                value={this.props.listTitle}
+                onChange={(e) => this.props.handleChange(e)}
                 className="header__input"
                 placeholder="название списка"
               />
@@ -121,7 +101,7 @@ class Home extends React.Component {
           </div>
           <div className="input__list">
             <ul className="list">
-              {this.state.list.map((item) => {
+              {this.props.list.map((item) => {
                 return (
                   <li className="list__item" key={item.id}>
                     <div className="list__item--title">
@@ -163,7 +143,7 @@ class Home extends React.Component {
                     </div>
                     <button
                       className="list__item--btn"
-                      onClick={() => this.deleteItem(item.id)}
+                      onClick={() => this.props.deleteItem(item.id)}
                       title="Удалить препарат"
                     >
                       X
@@ -177,9 +157,9 @@ class Home extends React.Component {
                 <input
                   className="list__item--title"
                   type="text"
-                  value={this.state.itemTitle}
+                  value={this.props.itemTitle}
                   onChange={(e) =>
-                    this.updateInput("itemTitle", e.target.value)
+                    this.props.updateInput("itemTitle", e.target.value)
                   }
                   placeholder="Название лекарства"
                 />
@@ -191,8 +171,8 @@ class Home extends React.Component {
                       type="radio"
                       name="beforeMeals"
                       value="beforeMeals"
-                      checked={this.state.selectedRadio === "beforeMeals"}
-                      onChange={this.hendleRadioChecked}
+                      checked={this.props.selectedRadio === "beforeMeals"}
+                      onChange={(e) => this.props.hendleRadioChecked(e)}
                     />
                   </div>
                   <div className="list__item--radio-box">
@@ -202,8 +182,8 @@ class Home extends React.Component {
                       type="radio"
                       name="afterMeals"
                       value="afterMeals"
-                      checked={this.state.selectedRadio === "afterMeals"}
-                      onChange={this.hendleRadioChecked}
+                      checked={this.props.selectedRadio === "afterMeals"}
+                      onChange={(e) => this.props.hendleRadioChecked(e)}
                     />
                   </div>
                 </div>
@@ -213,8 +193,8 @@ class Home extends React.Component {
                       className="list__item--checkbox"
                       type="checkbox"
                       name="morning"
-                      checked={this.state.morning}
-                      onChange={this.hendleChecked}
+                      checked={this.props.morning}
+                      onChange={(e) => this.props.hendleChecked(e)}
                     />
                     {"Утро"}
                   </label>
@@ -223,8 +203,8 @@ class Home extends React.Component {
                       className="list__item--checkbox"
                       type="checkbox"
                       name="day"
-                      checked={this.state.day}
-                      onChange={this.hendleChecked}
+                      checked={this.props.day}
+                      onChange={(e) => this.props.hendleChecked(e)}
                     />
                     {"День"}
                   </label>
@@ -233,8 +213,8 @@ class Home extends React.Component {
                       className="list__item--checkbox"
                       type="checkbox"
                       name="evening"
-                      checked={this.state.evening}
-                      onChange={this.hendleChecked}
+                      checked={this.props.evening}
+                      onChange={(e) => this.props.hendleChecked(e)}
                     />
                     {"Вечер"}
                   </label>
@@ -244,12 +224,15 @@ class Home extends React.Component {
             <div className="input__list--btn">
               <button
                 className="input__list--button"
-                onClick={this.addItem}
-                disabled={!this.state.itemTitle.length}
+                onClick={() => this.props.addItem()}
+                disabled={!this.props.itemTitle.length}
               >
                 Добавить лекарство
               </button>
-              <button className="input__list--button" onClick={this.saveList}>
+              <button
+                className="input__list--button"
+                onClick={() => this.props.saveList()}
+              >
                 Сохранить список
               </button>
             </div>
