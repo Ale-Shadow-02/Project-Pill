@@ -1,6 +1,6 @@
 import React from "react";
 // import BlockText from "../blockText/blockText";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import Slogan from "../blockTextTitle/blockTextTitle";
 import home_logo from "../../images/home/home_logo.svg";
 import "./home.scss";

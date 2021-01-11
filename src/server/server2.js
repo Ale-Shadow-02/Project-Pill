@@ -37,6 +37,17 @@ app.get("/list/:id", (req, res) => {
   }
 });
 
+app.delete("/list/:id", (req, res) => {
+  const listId = parseInt(req.params.id);
+  console.log(listId);
+  lists = lists.filter((el) => parseInt(el.id) !== listId);
+  if (lists) {
+    res.json(lists);
+  } else {
+    res.status(404).send("Нет такого");
+  }
+});
+
 // app.post("/list", (req, res) => {
 //   // lists.push(req.body);
 //   // console.log(lists);
@@ -89,16 +100,6 @@ app.get("/list/:id", (req, res) => {
 //     console.log(data);
 //   } else {
 //     console.log(err);
-//   }
-// });
-
-// app.delete("/list/:id", (req, res) => {
-//   const listId = parseInt(req.params.id);
-//   lists = lists.filter((el) => parseInt(el.id) !== listId);
-//   if (lists) {
-//     res.json(lists);
-//   } else {
-//     res.status(404).send("Нет такого");
 //   }
 // });
 

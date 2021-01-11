@@ -50,12 +50,18 @@ export default class Account extends Component {
   }
 
   deleteList = () => {
-    fetch("http://localhost:5000/list/41", {
+    const routId = this.props.match.params.id;
+    fetch(`http://localhost:8000/list/${routId}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
       },
-    });
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        this.setState({ clickList: [...data], sqlList: [] });
+      });
   };
 
   render() {
