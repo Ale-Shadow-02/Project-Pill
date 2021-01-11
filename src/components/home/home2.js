@@ -1,89 +1,47 @@
 import React from "react";
-import BlockText from "../blockText/blockText";
+// import BlockText from "../blockText/blockText";
+import { Link } from "react-router-dom";
+import Slogan from "../blockTextTitle/blockTextTitle";
+import home_logo from "../../images/home/home_logo.svg";
 import "./home.scss";
 
 // let count = 1;
 
 class Home extends React.Component {
-  // state = {
-  //   listTitle: "",
-  //   itemTitle: "",
-  //   selectedRadio: "",
-  //   morning: false,
-  //   day: false,
-  //   evening: false,
-  //   textLink: "",
-  //   list: [],
-  // };
-
-  // updateInput = (key, value) => {
-  //   this.setState({ [key]: value });
-  // };
-
-  // addItem = () => {
-  //   let itemTitle = {
-  //     id: count /* 1 + Math.random() */,
-  //     valueTitle: this.state.itemTitle.slice(),
-  //     selectedRadio: this.state.selectedRadio,
-  //     morning: this.state.morning,
-  //     day: this.state.day,
-  //     evening: this.state.evening,
-  //   };
-  //   count += 1;
-  //   const list = [...this.state.list];
-  //   list.push(itemTitle);
-  //   this.setState({ list, itemTitle: "" });
-  // };
-
-  // deleteItem = (id) => {
-  //   const list = [...this.state.list];
-  //   const updatedlist = list.filter((elem) => elem.id !== id);
-  //   this.setState({ list: updatedlist });
-  // };
-
-  // handleChange = (event) => {
-  //   let inputName = event.target.name;
-  //   let inputValue = event.target.value;
-  //   this.setState({ [inputName]: inputValue });
-  // };
-
-  // hendleRadioChecked = (event) => {
-  //   this.setState({ selectedRadio: event.target.value });
-  // };
-
-  // hendleChecked = (event) => {
-  //   let inputName = event.target.name;
-  //   let isActive = event.target.checked;
-  //   this.setState({ [inputName]: isActive });
-  // };
-
-  // saveList = () => {
-  //   fetch("http://localhost:8000/list", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       title: this.state.listTitle,
-  //       newList: this.state.list,
-  //     }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       data.map((el) => {
-  //         return this.setState({ textLink: el.id });
-  //       });
-  //     });
-  // };
-
   render() {
     console.log(this.props);
     return (
       <div className="home__body">
-        <BlockText
-          textLink={this.props.textLink}
-          listTitle={this.props.listTitle}
-        />
+        <div className="block__text">
+          <div className="home__logo">
+            <img src={home_logo} className="home__logo--img" alt={home_logo} />
+          </div>
+          <Slogan />
+          {this.props.appData.map((el) => {
+            return (
+              <div className="home__list" key={el.id}>
+                <span className="home__list--title">{el.title}</span>
+                <a
+                  href={`http://localhost:3000/account/${el.id}`}
+                  className="home__list--link"
+                >
+                  Перейти
+                </a>
+              </div>
+            );
+          })}
+          {/* <Link
+            to="/"
+            className={
+              this.props.appData.length
+                ? "input__list--button account__list--button"
+                : "none"
+            }
+          >
+            Добавить список
+          </Link> */}
+        </div>
+        {/* <BlockText data={this.props.appData} /> */}
         <div className="block__list">
           <div className="block__list--header">
             <div className="block__list--title header">

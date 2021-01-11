@@ -17,12 +17,14 @@ class App extends React.Component {
     morning: false,
     day: false,
     evening: false,
-    textLink: "",
+    // textLink: "",
+    // disabled: true,
     list: [],
+    appData: [],
   };
 
   updateInput = (key, value) => {
-    this.setState({ [key]: value });
+    this.setState({ [key]: value, disabled: false });
   };
 
   addItem = () => {
@@ -75,13 +77,23 @@ class App extends React.Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        data.map((el) => {
-          return this.setState({ textLink: el.id });
-        });
+        // data.map((el) => {
+        //   return this.setState({ textLink: el.id });
+        // });
+        this.setState({ appData: [...data] });
+        console.log(this.state.appData);
       });
     const clearList = [];
     this.setState({ list: clearList, listTitle: "" });
   };
+
+  componentDidMount() {
+    fetch("http://localhost:8000/list")
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({ appData: [...data] });
+      });
+  }
 
   render() {
     return (
@@ -93,7 +105,6 @@ class App extends React.Component {
           <Home2
             {...this.state}
             saveList={this.saveList}
-            // textLink={this.state.textLink}
             updateInput={this.updateInput}
             addItem={this.addItem}
             deleteItem={this.deleteItem}
@@ -102,10 +113,10 @@ class App extends React.Component {
             hendleChecked={this.hendleChecked}
           />
         </Route>
-        {/* <Route path="/account/:id" exact component={Account} /> */}
-        <Route path="/account/:id" exact>
-          <Account listId={this.state.textLink} />
-        </Route>
+        <Route path="/account/:id" exact component={Account} />
+        {/* <Route path="/account/:id" exact>
+          <Account />
+        </Route> */}
         {/* <Route path="/test" exact component={HomeTest} /> */}
       </div>
     );

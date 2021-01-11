@@ -20,6 +20,7 @@ app.post("/list", (req, res) => {
   };
   countId += 1;
   lists.push(list);
+  console.log(lists);
   res.json(lists);
 });
 

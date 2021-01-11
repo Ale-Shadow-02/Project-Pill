@@ -1,39 +1,53 @@
 import React, { Component } from "react";
+//import BlockText from "../blockText/blockText";
 import { Link } from "react-router-dom";
-import BlockText from "../blockText/blockText";
+import Slogan from "../blockTextTitle/blockTextTitle";
+import account_logo from "../../images/my_account/account_logo.svg";
 import "./account.scss";
 
 export default class Account extends Component {
   state = {
     sqlList: [],
     title: "",
+    clickList: [],
   };
 
-  componentDidMount() {
-    fetch(`http://localhost:8000/list/${this.props.listId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        data.map((el) => {
-          return this.setState({
-            sqlList: [...el.newList],
-            title: el.title,
-          });
-        });
-      });
-  }
-
   // componentDidMount() {
-  //   fetch(`http://localhost:8000/list/${this.props.listId}`)
+  //   const routId = this.props.match.params.id;
+  //   console.log(routId);
+  //   fetch(`http://localhost:8000/list/${routId}`)
   //     .then((res) => res.json())
   //     .then((data) => {
   //       console.log(data);
-  //       this.setState({
-  //         sqlList: [...this.state.sqlList, ...data.newList],
-  //         title: data.title,
+  //       data.map((el) => {
+  //         return this.setState({
+  //           sqlList: [...el.newList],
+  //           title: el.title,
+  //         });
   //       });
   //     });
   // }
+
+  componentDidMount() {
+    const routId = this.props.match.params.id;
+    fetch(`http://localhost:8000/list/${routId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        this.setState({
+          sqlList: [...data.newList],
+          title: data.title,
+        });
+      });
+    fetch("http://localhost:8000/list")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        this.setState({
+          clickList: [...data],
+        });
+      });
+  }
 
   deleteList = () => {
     fetch("http://localhost:5000/list/41", {
@@ -46,9 +60,36 @@ export default class Account extends Component {
 
   render() {
     console.log(this.props);
+    console.log(this.state.clickList);
     return (
       <div className="account__body">
-        <BlockText />
+        <div className="block__text">
+          <div className="home__logo">
+            <img
+              src={account_logo}
+              className="home__logo--img"
+              alt={account_logo}
+            />
+          </div>
+          <Slogan />
+          {this.state.clickList.map((el) => {
+            return (
+              <div className="home__list" key={el.id}>
+                <span className="home__list--title">{el.title}</span>
+                <a
+                  href={`http://localhost:3000/account/${el.id}`}
+                  className="home__list--link"
+                >
+                  Перейти
+                </a>
+              </div>
+            );
+          })}
+          <Link to="/" className="input__list--button account__list--button">
+            Добавить список
+          </Link>
+        </div>
+        {/* <BlockText /> */}
         <div className="block__list">
           <div className="block__list--header">
             <div className="block__list--title header">
@@ -103,12 +144,6 @@ export default class Account extends Component {
               })}
             </ul>
             <div className="input__list--btn">
-              <Link
-                to="/"
-                className="input__list--button account__list--button"
-              >
-                Добавить список
-              </Link>
               <button
                 className="input__list--button account__list--btn"
                 onClick={() => this.deleteList()}
