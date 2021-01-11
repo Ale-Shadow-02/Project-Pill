@@ -92,7 +92,7 @@ export default class Account extends Component {
             );
           })}
           <Link to="/" className="input__list--button account__list--button">
-            Добавить список
+            Создать новый список
           </Link>
         </div>
         {/* <BlockText /> */}
@@ -149,9 +149,10 @@ export default class Account extends Component {
                 );
               })}
             </ul>
-            <div className="input__list--btn">
+            <div className="input__list--btn" id="account__btn">
               <button
-                className="input__list--button account__list--btn"
+                className="input__list--button"
+                id="account__list--btn"
                 onClick={() => this.deleteList()}
               >
                 Удалить список

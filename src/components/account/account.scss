@@ -39,18 +39,26 @@
     }
   }
   &__list {
+    &--button {
+      display: block;
+      max-width: 220px;
+      margin-top: 20px;
+      text-align: center;
+      text-decoration: none;
+    }
+  }
+}
+  
+#account {
+  &__btn {
+    justify-content: flex-end;
+  }
+  &__list {
     &--btn {
       background: #EF0A0A;
       &:hover {
         background: darken(#EF0A0A, 15%);
       }
-    }
-    &--button {
-      display: block;
-      max-width: 200px;
-      margin-top: 20px;
-      text-align: center;
-      text-decoration: none;
     }
   }
 }

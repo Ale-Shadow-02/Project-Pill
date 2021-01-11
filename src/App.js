@@ -87,7 +87,14 @@ class App extends React.Component {
     this.setState({ list: clearList, listTitle: "" });
   };
 
-  componentDidMount() {
+  // componentDidMount() {
+  //   fetch("http://localhost:8000/list")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       this.setState({ appData: [...data] });
+  //     });
+  // }
+  function() {
     fetch("http://localhost:8000/list")
       .then((res) => res.json())
       .then((data) => {
