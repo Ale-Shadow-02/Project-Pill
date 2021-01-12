@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 //import BlockText from "../blockText/blockText";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import Slogan from "../blockTextTitle/blockTextTitle";
 import account_logo from "../../images/my_account/account_logo.svg";
 import "./account.scss";
@@ -91,9 +91,15 @@ export default class Account extends Component {
               </div>
             );
           })}
-          <Link to="/" className="input__list--button account__list--button">
+          {/* <Link to="/" className="input__list--button account__list--button">
             Создать новый список
-          </Link>
+          </Link> */}
+          <a
+            href="http://localhost:3000/"
+            className="input__list--button account__list--button"
+          >
+            Создать новый список
+          </a>
         </div>
         {/* <BlockText /> */}
         <div className="block__list">
@@ -145,6 +151,13 @@ export default class Account extends Component {
                         {"Вечер"}
                       </div>
                     </div>
+                    <button
+                      className="list__item--btn"
+                      onClick={() => this.props.deleteItem(el.id)}
+                      title="Удалить препарат"
+                    >
+                      X
+                    </button>
                   </li>
                 );
               })}

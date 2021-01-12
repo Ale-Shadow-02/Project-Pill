@@ -39,7 +39,14 @@ class App extends React.Component {
     count += 1;
     const list = [...this.state.list];
     list.push(itemTitle);
-    this.setState({ list, itemTitle: "" });
+    this.setState({
+      list,
+      itemTitle: "",
+      selectedRadio: "",
+      morning: "",
+      evening: "",
+      day: "",
+    });
   };
 
   deleteItem = (id) => {
@@ -87,20 +94,21 @@ class App extends React.Component {
     this.setState({ list: clearList, listTitle: "" });
   };
 
-  // componentDidMount() {
-  //   fetch("http://localhost:8000/list")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       this.setState({ appData: [...data] });
-  //     });
-  // }
-  function() {
+  componentDidMount() {
     fetch("http://localhost:8000/list")
       .then((res) => res.json())
       .then((data) => {
         this.setState({ appData: [...data] });
       });
   }
+
+  /* function() {
+    fetch("http://localhost:8000/list")
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({ appData: [...data] });
+      });
+  } */
 
   render() {
     return (
