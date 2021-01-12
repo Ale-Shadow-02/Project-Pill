@@ -151,13 +151,13 @@ export default class Account extends Component {
                         {"Вечер"}
                       </div>
                     </div>
-                    <button
+                    {/* <button
                       className="list__item--btn"
                       onClick={() => this.props.deleteItem(el.id)}
                       title="Удалить препарат"
                     >
                       X
-                    </button>
+                    </button> */}
                   </li>
                 );
               })}

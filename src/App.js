@@ -129,10 +129,9 @@ class App extends React.Component {
           />
         </Route>
         <Route path="/account/:id" exact component={Account} />
-        {/* <Route path="/account/:id" exact>
-          <Account />
+        {/* <Route path="/account/" exact>
+          <Account deleteItem={this.deleteItem} />
         </Route> */}
-        {/* <Route path="/test" exact component={HomeTest} /> */}
       </div>
     );
   }
