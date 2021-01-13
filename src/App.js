@@ -1,10 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import "./App.scss";
 import Registration from "./components/regisration/registration";
-// import HomeTest from "./components/home_test/home_test";
 import Account from "./components/account/account";
-// import Home from "./components/home/home";
 import Home2 from "./components/home/home2";
 
 let count = 1;
@@ -17,8 +14,6 @@ class App extends React.Component {
     morning: false,
     day: false,
     evening: false,
-    // textLink: "",
-    // disabled: true,
     list: [],
     appData: [],
   };
@@ -84,9 +79,6 @@ class App extends React.Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        // data.map((el) => {
-        //   return this.setState({ textLink: el.id });
-        // });
         this.setState({ appData: [...data] });
         console.log(this.state.appData);
       });
@@ -102,20 +94,10 @@ class App extends React.Component {
       });
   }
 
-  /* function() {
-    fetch("http://localhost:8000/list")
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({ appData: [...data] });
-      });
-  } */
-
   render() {
     return (
       <div className="app__container">
         <Route path="/registration" exact component={Registration} />
-        {/* <Route path="/" exact component={Home} /> */}
-        {/* <Route path="/" exact component={Home2} /> */}
         <Route path="/" exact>
           <Home2
             {...this.state}
@@ -128,10 +110,11 @@ class App extends React.Component {
             hendleChecked={this.hendleChecked}
           />
         </Route>
-        <Route path="/account/:id" exact component={Account} />
-        {/* <Route path="/account/" exact>
-          <Account deleteItem={this.deleteItem} />
-        </Route> */}
+        <Route
+          render={(props) => <Account data={this.state.appData} {...props} />}
+          exact
+          path="/account/:id"
+        />
       </div>
     );
   }

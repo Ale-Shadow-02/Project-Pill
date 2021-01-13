@@ -1,11 +1,7 @@
 import React from "react";
-// import BlockText from "../blockText/blockText";
-//import { Link } from "react-router-dom";
 import Slogan from "../blockTextTitle/blockTextTitle";
 import home_logo from "../../images/home/home_logo.svg";
 import "./home.scss";
-
-// let count = 1;
 
 class Home extends React.Component {
   render() {
@@ -30,18 +26,7 @@ class Home extends React.Component {
               </div>
             );
           })}
-          {/* <Link
-            to="/"
-            className={
-              this.props.appData.length
-                ? "input__list--button account__list--button"
-                : "none"
-            }
-          >
-            Добавить список
-          </Link> */}
         </div>
-        {/* <BlockText data={this.props.appData} /> */}
         <div className="block__list">
           <div className="block__list--header">
             <div className="block__list--title header">
@@ -55,7 +40,7 @@ class Home extends React.Component {
                 placeholder="название списка"
               />
             </div>
-            <div className="header__logo"></div>
+            {/* <div className="header__logo"></div> */}
           </div>
           <div className="input__list">
             <ul className="list">
@@ -80,23 +65,38 @@ class Home extends React.Component {
                       </div>
                     </div>
                     <div className="list__item--checkbox-box">
-                      <div className="list__item--checkbox">
-                        <p className="account__item--checkbox-box">
-                          {item.morning ? "V" : null}
-                        </p>
-                        {"Утро"}
+                      <div>
+                        <div
+                          className="list__item--checkbox"
+                          id="list__item-render"
+                        >
+                          <p className="account__item--checkbox-box">
+                            {item.morning ? "V" : null}
+                          </p>
+                        </div>
+                        <p>Утро</p>
                       </div>
-                      <div className="list__item--checkbox">
-                        <p className="account__item--checkbox-box">
-                          {item.day ? "V" : null}
-                        </p>
-                        {"День"}
+                      <div>
+                        <div
+                          className="list__item--checkbox"
+                          id="list__item-render"
+                        >
+                          <p className="account__item--checkbox-box">
+                            {item.day ? "V" : null}
+                          </p>
+                        </div>
+                        <p>День</p>
                       </div>
-                      <div className="list__item--checkbox">
-                        <p className="account__item--checkbox-box">
-                          {item.evening ? "V" : null}
-                        </p>
-                        {"Вечер"}
+                      <div>
+                        <div
+                          className="list__item--checkbox"
+                          id="list__item-render"
+                        >
+                          <p className="account__item--checkbox-box">
+                            {item.evening ? "V" : null}
+                          </p>
+                        </div>
+                        <p>Вечер</p>
                       </div>
                     </div>
                     <button
@@ -111,71 +111,73 @@ class Home extends React.Component {
               })}
             </ul>
             <div className="list">
-              <div className="list__item">
-                <input
-                  className="list__item--title"
-                  type="text"
-                  value={this.props.itemTitle}
-                  onChange={(e) =>
-                    this.props.updateInput("itemTitle", e.target.value)
-                  }
-                  placeholder="Название лекарства"
-                />
-                <div>
-                  <div className="list__item--radio-box">
-                    {"До еды"}
-                    <input
-                      className="list__item--radio"
-                      type="radio"
-                      name="beforeMeals"
-                      value="beforeMeals"
-                      checked={this.props.selectedRadio === "beforeMeals"}
-                      onChange={(e) => this.props.hendleRadioChecked(e)}
-                    />
+              <div className="list__wrap">
+                <div className="list__item">
+                  <input
+                    className="list__item--title"
+                    type="text"
+                    value={this.props.itemTitle}
+                    onChange={(e) =>
+                      this.props.updateInput("itemTitle", e.target.value)
+                    }
+                    placeholder="Название лекарства"
+                  />
+                  <div>
+                    <div className="list__item--radio-box">
+                      {"До еды"}
+                      <input
+                        className="list__item--radio"
+                        type="radio"
+                        name="beforeMeals"
+                        value="beforeMeals"
+                        checked={this.props.selectedRadio === "beforeMeals"}
+                        onChange={(e) => this.props.hendleRadioChecked(e)}
+                      />
+                    </div>
+                    <div className="list__item--radio-box">
+                      {"После еды"}
+                      <input
+                        className="list__item--radio"
+                        type="radio"
+                        name="afterMeals"
+                        value="afterMeals"
+                        checked={this.props.selectedRadio === "afterMeals"}
+                        onChange={(e) => this.props.hendleRadioChecked(e)}
+                      />
+                    </div>
                   </div>
-                  <div className="list__item--radio-box">
-                    {"После еды"}
-                    <input
-                      className="list__item--radio"
-                      type="radio"
-                      name="afterMeals"
-                      value="afterMeals"
-                      checked={this.props.selectedRadio === "afterMeals"}
-                      onChange={(e) => this.props.hendleRadioChecked(e)}
-                    />
+                  <div className="list__item--checkbox-box">
+                    <label className="list__label--checkbox">
+                      <input
+                        className="list__item--checkbox"
+                        type="checkbox"
+                        name="morning"
+                        checked={this.props.morning}
+                        onChange={(e) => this.props.hendleChecked(e)}
+                      />
+                      {"Утро"}
+                    </label>
+                    <label className="list__label--checkbox">
+                      <input
+                        className="list__item--checkbox"
+                        type="checkbox"
+                        name="day"
+                        checked={this.props.day}
+                        onChange={(e) => this.props.hendleChecked(e)}
+                      />
+                      {"День"}
+                    </label>
+                    <label className="list__label--checkbox">
+                      <input
+                        className="list__item--checkbox"
+                        type="checkbox"
+                        name="evening"
+                        checked={this.props.evening}
+                        onChange={(e) => this.props.hendleChecked(e)}
+                      />
+                      {"Вечер"}
+                    </label>
                   </div>
-                </div>
-                <div className="list__item--checkbox-box">
-                  <label>
-                    <input
-                      className="list__item--checkbox"
-                      type="checkbox"
-                      name="morning"
-                      checked={this.props.morning}
-                      onChange={(e) => this.props.hendleChecked(e)}
-                    />
-                    {"Утро"}
-                  </label>
-                  <label>
-                    <input
-                      className="list__item--checkbox"
-                      type="checkbox"
-                      name="day"
-                      checked={this.props.day}
-                      onChange={(e) => this.props.hendleChecked(e)}
-                    />
-                    {"День"}
-                  </label>
-                  <label>
-                    <input
-                      className="list__item--checkbox"
-                      type="checkbox"
-                      name="evening"
-                      checked={this.props.evening}
-                      onChange={(e) => this.props.hendleChecked(e)}
-                    />
-                    {"Вечер"}
-                  </label>
                 </div>
               </div>
             </div>

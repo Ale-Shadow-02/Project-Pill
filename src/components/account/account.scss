@@ -9,7 +9,7 @@
     border-radius: 30px;
     margin: 0px 0px 40px 0px;
     &--img {
-      width: 238px;
+      width: 200px;
     }
   }
   &__header {
@@ -50,12 +50,17 @@
 }
   
 #account {
+  &__header {
+    padding: 25px;
+  }
   &__btn {
     justify-content: flex-end;
+    width: 100%;
   }
   &__list {
     &--btn {
       background: #EF0A0A;
+      text-decoration: none;
       &:hover {
         background: darken(#EF0A0A, 15%);
       }
